@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.dbClientServer'
+version = '1.0.0 SNAPSHOT'
+
+def lombokVersion = '1.18.28'
+
+allprojects {
+    group 'org.dbclient'
+    version '1.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: 'java'
+
+
+    dependencies {
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        // test dependencies
+    }
+}
+

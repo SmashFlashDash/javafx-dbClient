@@ -1,0 +1,25 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = "DesktopClientApp"
+
+javafx {
+    version = "17"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'DesktopClientApp'
+    }
+}
+
+dependencies {
+}
+
+
+
