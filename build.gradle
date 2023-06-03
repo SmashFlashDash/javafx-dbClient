@@ -11,17 +11,15 @@ allprojects {
     group 'org.dbclient'
     version '1.0-SNAPSHOT'
 
+    apply plugin: 'java'
+
     repositories {
         mavenCentral()
     }
 
-    apply plugin: 'java'
-
-
     dependencies {
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-        // test dependencies
     }
 }
 
