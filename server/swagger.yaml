@@ -7,14 +7,14 @@ servers:
   - url: http://localhost:8080
     description: Generated server url
 tags:
-- name: item
-  description: Работа с товаром
+  - name: item
+    description: Работа с товаром
 
 paths:
   /api/v1/item:
     post:
       tags:
-      - item
+        - item
       summary: Добавление товара
       operationId: create
       
@@ -29,61 +29,61 @@ paths:
           description: "OK"
         400:
           description: "Invalid input"
-      
-      
-    # get:
-    #   tags:
-    #   - item
-    #   summary: Получение товаров
-    #   operationId: getAll
-    #   responses:
-    #     '200':
-    #       description: Посты получены
-    #       content:
-    #         application/json:
-    #           schema:
-    #             allOf:
-    #               - $ref: '#/components/schemas/Item'
-    #     '400':
-    #       description: Bad Request
-    #     '404':
-    #       description: Посты не найдены
-        
-        
-    # put:
-    #   tags:
-    #   - "item"
-    #   summary: "Update an existing pet"
-    #   description: ""
-    #   operationId: "updatePet"
-    #   consumes:
-    #   - "application/json"
-    #   - "application/xml"
-    #   produces:
-    #   - "application/xml"
-    #   - "application/json"
-    #   parameters:
-    #   - in: "body"
-    #     name: "body"
-    #     description: "Pet object that needs to be added to the store"
-    #     required: true
-    #     schema:
-    #       $ref: "#/definitions/Item"
-    #   responses:
-    #     400:
-    #       description: "Invalid ID supplied"
-    #     404:
-    #       description: "Pet not found"
-    #     405:
-    #       description: "Validation exception"
-    #   security:
-    #   - petstore_auth:
-    #     - "write:pets"
-    #     - "read:pets"
-        
 
 
+        # get:
+        #   tags:
+        #   - item
+        #   summary: Получение товаров
+        #   operationId: getAll
+        #   responses:
+        #     '200':
+        #       description: Посты получены
+        #       content:
+        #         application/json:
+        #           schema:
+        #             allOf:
+        #               - $ref: '#/components/schemas/Item'
+        #     '400':
+        #       description: Bad Request
+        #     '404':
+        #       description: Посты не найдены
         
+        
+        # put:
+        #   tags:
+        #   - "item"
+        #   summary: "Update an existing pet"
+        #   description: ""
+        #   operationId: "updatePet"
+        #   consumes:
+        #   - "application/json"
+        #   - "application/xml"
+        #   produces:
+        #   - "application/xml"
+        #   - "application/json"
+        #   parameters:
+        #   - in: "body"
+        #     name: "body"
+        #     description: "Pet object that needs to be added to the store"
+        #     required: true
+        #     schema:
+        #       $ref: "#/definitions/Item"
+        #   responses:
+        #     400:
+        #       description: "Invalid ID supplied"
+        #     404:
+        #       description: "Pet not found"
+        #     405:
+        #       description: "Validation exception"
+        #   security:
+        #   - petstore_auth:
+        #     - "write:pets"
+        #     - "read:pets"
+
+
+
+
     # delete:
     #   tags:
     #   - "item"
@@ -113,43 +113,43 @@ paths:
     #   - petstore_auth:
     #     - "write:pets"
     #     - "read:pets"
-    
-    
+
+
 components:
   schemas:
-   Item:
-    type: object
-    properties:
-      id:
-        type: integer
-        description: Автоматически сгенерированный идентификатор
-        format: int64
-        example: 12221
-      name:
-        type: string
-        description: Имя товара
-      category:
-        type: string
-        enum:
-        - NOTEBOOK
-        - DESKTOP
-        - SERVER
-      dateTimeUPD:
-        type: string
-        format: date-time
-        description: Время обновления записи
-      price:
-        type: number
-        format: float
-        description: Цена товара
-      amount:
-        type: integer
-        format: int32
-        description: Кол-во
-    xml:
-      name: Item
+    Item:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Автоматически сгенерированный идентификатор
+          format: int64
+          example: 12221
+        name:
+          type: string
+          description: Имя товара
+        category:
+          type: string
+          enum:
+            - NOTEBOOK
+            - DESKTOP
+            - SERVER
+        dateTimeUPD:
+          type: string
+          format: date-time
+          description: Время обновления записи
+        price:
+          type: number
+          format: float
+          description: Цена товара
+        amount:
+          type: integer
+          format: int32
+          description: Кол-во
+      xml:
+        name: Item
 
-  
+
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
