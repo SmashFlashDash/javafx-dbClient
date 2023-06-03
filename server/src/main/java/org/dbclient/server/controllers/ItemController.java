@@ -1,11 +1,14 @@
 package org.dbclient.server.controllers;
 
-import common.ItemDto;
+import common.dto.ItemAddDto;
+import common.dto.ItemDto;
 import lombok.RequiredArgsConstructor;
+import org.dbclient.server.data.Item;
 import org.dbclient.server.services.ItemService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/item")
@@ -14,27 +17,29 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody ItemDto registerDto) {
-        if (itemService.add(registerDto)) {
-            return ResponseEntity.ok("");
-        }
-        return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Item> add(@RequestBody ItemAddDto itemDto) {
+        return ResponseEntity.ok(itemService.add(itemDto));
     }
 
     @GetMapping
-    public ResponseEntity<ItemDto> get() {
-        return ResponseEntity.ok(new ItemDto());
+    public ResponseEntity<Item> get(@RequestParam Long id) {
+        return ResponseEntity.ok(itemService.getById(id));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<Item>> getAll() {
+        return ResponseEntity.ok(itemService.getAll());
+    }
 
     @PutMapping
-    public ResponseEntity<ItemDto> update(@RequestBody ItemDto test) {
-        return ResponseEntity.ok(new ItemDto());
+    public ResponseEntity<Item> update(@RequestBody ItemDto item) {
+        return ResponseEntity.ok(itemService.update(item));
     }
 
     @DeleteMapping
-    public void delete() {
-        itemService.example();
+    public ResponseEntity<String> delete(@RequestBody ItemDto itemDto) {
+        itemService.delete(itemDto);
+        return ResponseEntity.ok("");
     }
 
     //@GetMapping("/search")

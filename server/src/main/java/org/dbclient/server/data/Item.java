@@ -1,6 +1,10 @@
 package org.dbclient.server.data;
 
+import common.ItemCategory;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -8,6 +12,9 @@ import java.time.LocalDateTime;
 
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Item {
     @Id
@@ -27,8 +34,4 @@ public class Item {
     private Float price;
 
     private Integer amount;
-
-    public enum ItemCategory {
-        NOTEBOOK, DESKTOP, SERVER
-    }
 }

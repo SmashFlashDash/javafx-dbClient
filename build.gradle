@@ -10,7 +10,9 @@ def lombokVersion = '1.18.28'
 allprojects {
     group 'org.dbclient'
     version '1.0-SNAPSHOT'
+}
 
+subprojects{
     apply plugin: 'java'
 
     repositories {
