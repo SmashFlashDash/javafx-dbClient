@@ -1,6 +1,5 @@
-package org.dbclient.server.data;
+package common.data;
 
-import common.ItemCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

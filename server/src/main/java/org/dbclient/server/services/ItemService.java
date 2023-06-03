@@ -1,9 +1,9 @@
 package org.dbclient.server.services;
 
+import common.data.Item;
 import common.dto.ItemAddDto;
 import common.dto.ItemDto;
 import lombok.RequiredArgsConstructor;
-import org.dbclient.server.data.Item;
 import org.dbclient.server.services.repositories.ItemRepository;
 import org.springframework.stereotype.Service;
 

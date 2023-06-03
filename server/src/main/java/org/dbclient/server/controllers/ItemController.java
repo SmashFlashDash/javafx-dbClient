@@ -1,13 +1,14 @@
 package org.dbclient.server.controllers;
 
+import common.data.Item;
 import common.dto.ItemAddDto;
 import common.dto.ItemDto;
 import lombok.RequiredArgsConstructor;
-import org.dbclient.server.data.Item;
 import org.dbclient.server.services.ItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping
-    public ResponseEntity<Item> add(@RequestBody ItemAddDto itemDto) {
+    public ResponseEntity<Item> add(@Valid @RequestBody ItemAddDto itemDto) {
         return ResponseEntity.ok(itemService.add(itemDto));
     }
 
@@ -32,12 +33,12 @@ public class ItemController {
     }
 
     @PutMapping
-    public ResponseEntity<Item> update(@RequestBody ItemDto item) {
+    public ResponseEntity<Item> update(@Valid @RequestBody ItemDto item) {
         return ResponseEntity.ok(itemService.update(item));
     }
 
     @DeleteMapping
-    public ResponseEntity<String> delete(@RequestBody ItemDto itemDto) {
+    public ResponseEntity<String> delete(@Valid @RequestBody ItemDto itemDto) {
         itemService.delete(itemDto);
         return ResponseEntity.ok("");
     }

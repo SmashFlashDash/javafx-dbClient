@@ -11,7 +11,8 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> sss(Exception ex, WebRequest request) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        ex.printStackTrace();
+        return new ResponseEntity<>("ups its wrong", HttpStatus.BAD_REQUEST);
     }
 
 }
