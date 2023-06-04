@@ -1,0 +1,26 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+mainClassName = "ClientApp"
+
+javafx {
+    version = "17"
+    modules = ['javafx.controls', 'javafx.fxml']
+//    configuration = "compileOnly"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ClientApp'
+    }
+}
+
+dependencies {
+    implementation project(':common')
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+}
+
+
+

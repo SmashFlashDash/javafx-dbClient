@@ -4,7 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class DesktopClientApp extends Application {
+public class ClientApp extends Application {
 
     public static void main(String[] args) {
         launch();
