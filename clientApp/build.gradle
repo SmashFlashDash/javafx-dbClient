@@ -4,8 +4,9 @@ plugins {
     id 'org.springframework.boot' version "2.7.12"
 }
 
-mainClassName = 'org.dbclient.client.ClientApp'
+def mainClass = 'org.dbclient.client.ClientApp'
 
+mainClassName = "${mainClass}"
 javafx {
     version = "17"
     modules = ['javafx.controls', 'javafx.fxml']
@@ -19,7 +20,7 @@ jar {
     //    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     //}
     manifest {
-        attributes 'Main-Class': 'org.dbclient.client.ClientApp'
+        attributes 'Main-Class': "${mainClass}"
     }
 }
 

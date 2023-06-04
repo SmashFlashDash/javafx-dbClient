@@ -9,7 +9,7 @@
 
 <Tab fx:id="consoleTab" text="Console" xmlns:fx="http://javafx.com/fxml/1" 
      xmlns="http://javafx.com/javafx/8" 
-     fx:controller="com.mvp.java.controllers.ConsoleTabController">
+     fx:controller="org.dbclient.client.controllers.ConsoleTabController">
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <children>

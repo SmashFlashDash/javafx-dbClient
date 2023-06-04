@@ -9,7 +9,7 @@
 
 
 <Tab fx:id="tabLogger" text="Logger" xmlns:fx="http://javafx.com/fxml/1" 
-     fx:controller="com.mvp.java.controllers.LoggerTabController">
+     fx:controller="org.dbclient.client.controllers.LoggerTabController">
     <content>
         <VBox prefHeight="200.0" prefWidth="100.0">
             <children>

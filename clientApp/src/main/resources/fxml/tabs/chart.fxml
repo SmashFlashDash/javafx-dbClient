@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+   fx:controller="org.dbclient.client.controllers.ChartController">
+   <children>
+      <Button fx:id="btn" layoutX="130.0" layoutY="126.0" mnemonicParsing="false" onMouseReleased="#doStuff" prefHeight="131.0" prefWidth="162.0" text="Button" />
+   </children>
+</AnchorPane>
