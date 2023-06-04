@@ -1,4 +1,4 @@
-package org.dbclient.client.controllers;
+package org.dbclient.client.exmp;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;

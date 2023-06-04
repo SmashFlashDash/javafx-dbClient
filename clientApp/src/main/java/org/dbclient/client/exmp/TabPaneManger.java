@@ -1,6 +1,7 @@
-package org.dbclient.client.controllers;
+package org.dbclient.client.exmp;
 
 import javafx.scene.control.TextArea;
+import org.dbclient.client.exmp.LoggerTabController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

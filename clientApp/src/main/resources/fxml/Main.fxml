@@ -26,7 +26,7 @@
                         <Font name="SansSerif Regular" size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="fieldPort" promptText="http://localhost:8080" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="fieldPort" promptText="http://localhost:8080" text="http://localhost:8080" HBox.hgrow="ALWAYS" />
                   <JFXButton fx:id="btnSavePort" style="-fx-background-color: #3a78f0;" text="ОБНОВИТЬ" textFill="WHITE" />
                </children>
                <cursor>

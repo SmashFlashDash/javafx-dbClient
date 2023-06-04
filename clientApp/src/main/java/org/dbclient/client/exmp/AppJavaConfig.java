@@ -1,4 +1,4 @@
-package org.dbclient.client.config;
+package org.dbclient.client.exmp;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

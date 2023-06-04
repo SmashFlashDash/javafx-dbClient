@@ -1,4 +1,4 @@
-package org.dbclient.client.controllers;
+package org.dbclient.client.exmp;
 
 import common.dto.ItemDto;
 import javafx.fxml.FXML;
