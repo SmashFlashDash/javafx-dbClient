@@ -4,6 +4,7 @@ import common.dto.ItemDto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import lombok.RequiredArgsConstructor;
 import org.dbclient.client.webclient.WebClientReactive;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,6 +18,10 @@ import java.util.List;
 public class ChartController {
     // TODO: сделать гуи с кнопками и статус баром
     //
+
+    @FXML
+    private AnchorPane MainPane;
+
     @FXML
     private Button btn;
     @FXML
