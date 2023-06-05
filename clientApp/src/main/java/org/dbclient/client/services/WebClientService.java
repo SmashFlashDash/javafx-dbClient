@@ -13,13 +13,18 @@ import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
-public class DataService {
+public class WebClientService {
     private final WebClient webClient;
     private final Logger log = Logger.getLogger(this.getClass().getName());
+    private String baseURI = "http://localhost:8080";
+
+    public void setBaseURI(String baseURI) {
+        this.baseURI = baseURI;
+    }
 
     public List<ItemDto> getAllItems() {
         Mono<List<ItemDto>> response = webClient
-                .get().uri("/api/v1/item/all")
+                .get().uri(baseURI.concat("/api/v1/item/all"))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<ItemDto>>() {
                 })
@@ -30,7 +35,9 @@ public class DataService {
 
     public ItemDto getItem(Long id) {
         Mono<ItemDto> response = webClient
-                .get().uri("/api/v1/item/all")
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(baseURI + "/api/v1/item{id}").build(id))
                 .retrieve()
                 .bodyToMono(ItemDto.class)
                 .doOnSuccess(this::sucess)
@@ -40,11 +47,10 @@ public class DataService {
 
     public ItemDto addItem(ItemDto itemDto) {
         Mono<ItemDto> response = webClient
-                .post().uri("/api/v1/item/all")
+                .post().uri("/api/v1/item")
                 .body(Mono.just(itemDto), ItemDto.class)
                 .retrieve()
                 .bodyToMono(ItemDto.class)
-                //.onErrorMap(e -> new MyException("messahe",e))
                 .doOnSuccess(this::sucess)
                 .doOnError(this::error);
         return response.block();
@@ -52,11 +58,10 @@ public class DataService {
 
     public ItemDto editItem(ItemDto itemDto) {
         Mono<ItemDto> response = webClient
-                .put().uri("/api/v1/item/all")
+                .put().uri(baseURI + "/api/v1/item")
                 .body(Mono.just(itemDto), ItemDto.class)
                 .retrieve()
                 .bodyToMono(ItemDto.class)
-                //.onErrorMap(e -> new MyException("messahe",e))
                 .doOnSuccess(this::sucess)
                 .doOnError(this::error);
         return response.block();
@@ -66,7 +71,7 @@ public class DataService {
         // TODO: проверить выполнение
         // можо поменять на get
         Mono<ItemDto> response = webClient
-                .method(HttpMethod.DELETE).uri("/api/v1/item/all")
+                .method(HttpMethod.DELETE).uri(baseURI + "/api/v1/item")
                 .body(Mono.just(itemDto), ItemDto.class)
                 .retrieve()
                 .bodyToMono(ItemDto.class)

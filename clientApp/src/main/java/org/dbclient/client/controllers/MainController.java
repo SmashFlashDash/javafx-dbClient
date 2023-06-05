@@ -7,10 +7,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import lombok.RequiredArgsConstructor;
+import org.dbclient.client.services.WebClientService;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class MainController {
+    private final WebClientService webClientService;
+
     // TODO:
     //  сервисы: data, setting
     //      settings - меняет порт webclient
