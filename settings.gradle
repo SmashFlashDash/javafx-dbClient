@@ -1,6 +1,6 @@
 rootProject.name = 'dbClientServer'
 
-include 'clientDesk'
-include 'server'
+include 'clientApp'
+include 'serverApp'
 include 'common'
 

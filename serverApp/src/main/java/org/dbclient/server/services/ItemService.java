@@ -17,6 +17,7 @@ public class ItemService {
 
     public Item add(ItemAddDto itemRequest) {
         Item item = Item.builder()
+                .name(itemRequest.getName())
                 .category(itemRequest.getCategory())
                 .price(itemRequest.getPrice())
                 .amount(itemRequest.getAmount()).build();
@@ -24,7 +25,7 @@ public class ItemService {
     }
 
     public Item getById(Long id) {
-        return itemRepository.findById(id).orElseThrow();
+        return itemRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
     }
 
     public List<Item> getAll() {
@@ -33,12 +34,12 @@ public class ItemService {
 
     public Item update(ItemDto itemDto) {
         return itemRepository.findById(itemDto.getId()).map(item -> {
+            item.setName(itemDto.getName());
             item.setAmount(itemDto.getAmount());
             item.setCategory(itemDto.getCategory());
             item.setPrice(itemDto.getPrice());
-            item.setName(itemDto.getName());
             return itemRepository.save(item);
-        }).orElseThrow();
+        }).orElseThrow(() -> new RuntimeException(""));
     }
 
     public void delete(ItemDto itemDto) {
