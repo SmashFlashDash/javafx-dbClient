@@ -1,10 +1,10 @@
 package org.dbclient.client;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.dbclient.client.controllers.MainController;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -21,9 +21,7 @@ public class ClientApp extends Application {
     @Override
     public void init() throws Exception {
         context = bootSpring();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
-        fxmlLoader.setControllerFactory(context::getBean);
-        rootNode = fxmlLoader.load();
+        rootNode = (Parent) context.getBean(MainController.class).show();
     }
 
     @Override

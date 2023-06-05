@@ -6,6 +6,7 @@ import common.dto.ItemDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -13,6 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import lombok.RequiredArgsConstructor;
 import org.dbclient.client.services.WebClientService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
@@ -22,6 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
     private final WebClientService webClientService;
+    private final PopupController popupController;
+    private final ApplicationContext context;
 
     // TODO:
     //  сервисы: data, setting
@@ -71,8 +76,13 @@ public class MainController {
     void initialize() {
         initEvents();
         initTableColumns(ItemDto.class);
-
         connetcToServer();
+    }
+
+    public Object show() throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        return fxmlLoader.load();
     }
 
     // TODO: чтобы не делать пооток и не блочить webClient
