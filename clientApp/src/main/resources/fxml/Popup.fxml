@@ -6,57 +6,50 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1"
-            fx:controller="org.dbclient.client.controllers.PopupController">
+
+<AnchorPane nodeOrientation="LEFT_TO_RIGHT" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dbclient.client.controllers.PopupController">
     <children>
-        <VBox>
+        <VBox minHeight="200.0" minWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <HBox>
+                <HBox VBox.vgrow="SOMETIMES">
                     <children>
-                        <VBox>
+                        <VBox HBox.hgrow="SOMETIMES">
                             <children>
-                                <HBox>
+                                <HBox VBox.vgrow="SOMETIMES">
                                     <children>
-                                        <ListView fx:id="leftViewType" prefHeight="200.0" prefWidth="100.0"
-                                                  style="-fx-background-color: #a2a2a2;"/>
-                                        <ListView fx:id="leftViewTitle" prefHeight="200.0" prefWidth="100.0"
-                                                  style="-fx-background-color: #a2a2a2;"/>
+                                        <ListView fx:id="leftViewType" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #a2a2a2;" HBox.hgrow="ALWAYS" />
+                                        <ListView fx:id="leftViewTitle" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #a2a2a2;" HBox.hgrow="ALWAYS" />
                                     </children>
                                 </HBox>
-                                <JFXButton fx:id="btnDeny" maxWidth="1.7976931348623157E308" minHeight="50.0"
-                                           style="-fx-border-color: #e33437; -fx-border-width: 5; -fx-border-radius: 0; -fx-background-color: #ffffff;"
-                                           text="ОТМЕНА" textFill="#000000b2">
+                                <JFXButton fx:id="btnDeny" maxWidth="1.7976931348623157E308" minHeight="50.0" style="-fx-border-color: #e33437; -fx-border-width: 5; -fx-border-radius: 0; -fx-background-color: #ffffff;" text="ОТМЕНА" textFill="#000000b2" VBox.vgrow="ALWAYS">
                                     <font>
-                                        <Font name="System Bold" size="15.0"/>
+                                        <Font name="System Bold" size="15.0" />
                                     </font>
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@../icons/deny.png"/>
+                                                <Image url="@../icons/deny.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
                             </children>
                         </VBox>
-                        <VBox>
+                        <VBox HBox.hgrow="SOMETIMES">
                             <children>
-                                <ListView fx:id="rightView" prefHeight="200.0" prefWidth="200.0"
-                                          style="-fx-background-color: #ffffff;"/>
-                                <JFXButton fx:id="btnAccept" maxWidth="1.7976931348623157E308" minHeight="50.0"
-                                           style="-fx-border-color: #5Ba4fc; -fx-border-width: 5; -fx-border-radius: 0; -fx-background-color: #ffffff;"
-                                           text="ПРИМЕНИТЬ" textFill="#000000aa">
+                                <ListView fx:id="rightView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" VBox.vgrow="ALWAYS" />
+                                <JFXButton fx:id="btnAccept" maxWidth="1.7976931348623157E308" minHeight="50.0" style="-fx-border-color: #5Ba4fc; -fx-border-width: 5; -fx-border-radius: 0; -fx-background-color: #ffffff;" text="ПРИМЕНИТЬ" textFill="#000000aa" VBox.vgrow="ALWAYS">
                                     <font>
-                                        <Font name="System Bold" size="15.0"/>
+                                        <Font name="System Bold" size="15.0" />
                                     </font>
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@../icons/accept.png"/>
+                                                <Image url="@../icons/accept.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -69,7 +62,7 @@
                     <children>
                         <Label fx:id="labelStatus" text="Label">
                             <padding>
-                                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                             </padding>
                         </Label>
                     </children>
