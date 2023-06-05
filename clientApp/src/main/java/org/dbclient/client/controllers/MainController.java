@@ -2,6 +2,7 @@ package org.dbclient.client.controllers;
 
 
 import com.jfoenix.controls.JFXButton;
+import common.dto.ItemDto;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,12 +50,14 @@ public class MainController {
     //  можно сделать поиск кнопку и искать локально в таблице а не в sql
 
     @FXML
-    private JFXButton btnSavePort;
+    private JFXButton btnSaveUri;
     @FXML
-    private TextField fieldPort;
+    private TextField fieldUri;
     @FXML
     private Text fieldStatus;
 
+    @FXML
+    private JFXButton btnRefreshItems;
     @FXML
     private JFXButton btnAddItem;
     @FXML
@@ -72,6 +75,35 @@ public class MainController {
 
     @FXML
     void initialize() {
+        // set default localhost text in
+        setEvents();
+        //connectFillTable();
+    }
+
+    private void setEvents() {
+        btnSaveUri.setOnMouseClicked(event -> {
+            webClientService.setBaseURI(fieldUri.getText());
+            // test connect, show in status
+        });
+        btnRefreshItems.setOnMouseClicked(event -> {
+            webClientService.getAllItems();
+            // refresh table
+        });
+        btnAddItem.setOnMouseClicked(event -> {
+            // show second window, block first widnow
+            // второе окно с пустыми полями без id
+        });
+        btnEditItem.setOnMouseClicked(event -> {
+            // show second window, block first widnow
+            // передать во второе окно обьект выбранный в таблице
+        });
+        btnDeleteItem.setOnMouseClicked(event -> {
+            // взять выбранный обект в таблице и отправить в deleteItem
+            //webClientService.deleteItem();
+        });
+    }
+
+    private void connectFillTable() {
     }
 
 }

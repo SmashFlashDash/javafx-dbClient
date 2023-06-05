@@ -26,8 +26,8 @@
                         <Font name="SansSerif Regular" size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="fieldPort" promptText="http://localhost:8080" text="http://localhost:8080" HBox.hgrow="ALWAYS" />
-                  <JFXButton fx:id="btnSavePort" style="-fx-background-color: #3a78f0;" text="ОБНОВИТЬ" textFill="WHITE" />
+                  <TextField fx:id="fieldUri" promptText="http://localhost:8080" text="http://localhost:8080" HBox.hgrow="ALWAYS" />
+                  <JFXButton fx:id="btnSaveUri" style="-fx-background-color: #3a78f0;" text="ОБНОВИТЬ" textFill="WHITE" />
                </children>
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
@@ -38,7 +38,19 @@
             </HBox>
             <HBox alignment="CENTER_LEFT">
                <children>
-                  <JFXButton fx:id="btnAddItem" text="Add" textOverrun="CLIP" wrapText="true">
+                  <JFXButton fx:id="btnRefreshItems" text="REFRESH" textOverrun="CLIP" wrapText="true" HBox.hgrow="NEVER">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/refersh.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btnAddItem" text="ADD" textOverrun="CLIP" wrapText="true">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -93,6 +105,9 @@
                   <TableColumn prefWidth="75.0" text="Name" />
                   <TableColumn prefWidth="75.0" text="Name" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
             <HBox>
                <children>
