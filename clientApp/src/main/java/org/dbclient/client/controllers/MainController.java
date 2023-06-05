@@ -2,15 +2,24 @@ package org.dbclient.client.controllers;
 
 
 import com.jfoenix.controls.JFXButton;
+import com.sun.javafx.collections.ObservableListWrapper;
 import common.dto.ItemDto;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import lombok.RequiredArgsConstructor;
 import org.dbclient.client.services.WebClientService;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -67,27 +76,41 @@ public class MainController {
 
 
     @FXML
-    private TableView<?> tableView;
-    @FXML
-    private TableColumn<?, ?> idCol;
-    @FXML
-    private TableColumn<?, ?> col2;
+    private TableView<ItemDto> tableView;
+
 
     @FXML
     void initialize() {
         // set default localhost text in
         setEvents();
+        //btnSaveUri.onMouseClickedProperty()
         //connectFillTable();
+
+
+
+        List<ItemDto> items = webClientService.getAllItems();
+        tableView.getColumns().clear();
+        for (Field field : ItemDto.class.getDeclaredFields()) {
+            TableColumn column = new TableColumn<>(field.getName());
+            column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
+            tableView.getColumns().add(column);
+        }
+        ObservableList<ItemDto> list = FXCollections.observableArrayList(items);
+        //tableView.getItems().clear();
+        tableView.setItems(list);
     }
 
     private void setEvents() {
         btnSaveUri.setOnMouseClicked(event -> {
+            // TODO: можно передавать Function onStart, onSucess, onError
             webClientService.setBaseURI(fieldUri.getText());
-            // test connect, show in status
+            // проверить соединение
+            // создать колонки в таблице
+            // отобразить в статусе
         });
         btnRefreshItems.setOnMouseClicked(event -> {
             webClientService.getAllItems();
-            // refresh table
+            // обновить таблице
         });
         btnAddItem.setOnMouseClicked(event -> {
             // show second window, block first widnow
