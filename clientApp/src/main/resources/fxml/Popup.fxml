@@ -60,7 +60,7 @@
                 </HBox>
                 <HBox>
                     <children>
-                        <Label fx:id="labelStatus" text="Label">
+                        <Label fx:id="labelStatus" text="Editor">
                             <padding>
                                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                             </padding>
