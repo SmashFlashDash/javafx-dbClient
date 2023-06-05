@@ -1,12 +1,10 @@
 package org.dbclient.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import common.dto.ItemAddDto;
 import common.dto.ItemDto;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -24,7 +22,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -55,13 +52,6 @@ public class PopupController {
     @FXML
     void initialize() throws IllegalAccessException {
         listViewsInit();
-        leftViewType.setMouseTransparent(true);
-        leftViewType.setFocusTraversable(false);
-        leftViewTitle.setMouseTransparent(true);
-        leftViewTitle.setFocusTraversable(false);
-        rightView.setOnEditCommit(event -> rightView.getItems().set(event.getIndex(), event.getNewValue()));
-        rightView.setEditable(true);
-        rightView.setCellFactory(TextFieldListCell.forListView());
         btnEventsInit();
     }
 
@@ -77,6 +67,7 @@ public class PopupController {
             Stage stage = (Stage) btnDeny.getScene().getWindow();
             stage.close();
         });
+
         // парсинг строковых значений полей в новый itemDto
         btnAccept.setOnMouseClicked(event -> {
             //TODO: хорошо сделать через рефлексию чтоббы не зависить от обьекта таблицы
@@ -102,12 +93,20 @@ public class PopupController {
     }
 
     private void listViewsInit() throws IllegalAccessException {
+        leftViewType.setMouseTransparent(true);
+        leftViewType.setFocusTraversable(false);
+        leftViewTitle.setMouseTransparent(true);
+        leftViewTitle.setFocusTraversable(false);
+        rightView.setOnEditCommit(event -> rightView.getItems().set(event.getIndex(), event.getNewValue()));
+        rightView.setEditable(true);
+        rightView.setCellFactory(TextFieldListCell.forListView());
+
         for (Field field : ItemDto.class.getDeclaredFields()) {
             leftViewType.getItems().add(field.getType().getSimpleName());
             leftViewTitle.getItems().add(field.getName());
             if (editingItem != null) {
                 Object value = field.get(editingItem);
-                rightView.getItems().add(value==null? "" : value.toString());
+                rightView.getItems().add(value == null ? "" : value.toString());
             } else {
                 rightView.getItems().add("");
             }

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public class DtoMapper {
 
-    public static ItemDto parseToItemDto(String[] fields){
+    public static ItemDto parseToItemDto(String[] fields) {
         return new ItemDto(
                 Long.valueOf(fields[0]),
                 fields[1],

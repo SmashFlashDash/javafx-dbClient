@@ -13,12 +13,16 @@ javafx {
     //configuration = "compileOnly"
 }
 
+//bootJar {
+//    enabled = false
+//}
+
 
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    //from {
-    //    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    //}
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
     manifest {
         attributes 'Main-Class': "${mainClass}"
     }
@@ -27,8 +31,6 @@ jar {
 dependencies {
     implementation project(':common')
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.kordamp.ikonli:ikonli-javafx:12.3.1'
-    implementation 'org.kordamp.ikonli:ikonli-bootstrapicons-pack:12.3.1'
     implementation 'com.jfoenix:jfoenix:9.0.10'
 }
 

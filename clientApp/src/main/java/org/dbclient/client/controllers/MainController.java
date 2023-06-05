@@ -95,8 +95,8 @@ public class MainController {
     }
 
     private void initEvents() {
-        fieldUri.setOnKeyPressed( event -> {
-            if( event.getCode() == KeyCode.ENTER ) {
+        fieldUri.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
                 connetcToServer();
             }
         });
