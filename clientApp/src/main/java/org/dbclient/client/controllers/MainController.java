@@ -2,9 +2,7 @@ package org.dbclient.client.controllers;
 
 
 import com.jfoenix.controls.JFXButton;
-import com.sun.javafx.collections.ObservableListWrapper;
 import common.dto.ItemDto;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,7 +16,6 @@ import org.dbclient.client.services.WebClientService;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -74,44 +71,24 @@ public class MainController {
     @FXML
     private JFXButton btnEditItem;
 
-
     @FXML
     private TableView<ItemDto> tableView;
 
 
     @FXML
     void initialize() {
-        // set default localhost text in
-        setEvents();
-        //btnSaveUri.onMouseClickedProperty()
-        //connectFillTable();
-
-
-
-        List<ItemDto> items = webClientService.getAllItems();
-        tableView.getColumns().clear();
-        for (Field field : ItemDto.class.getDeclaredFields()) {
-            TableColumn column = new TableColumn<>(field.getName());
-            column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
-            tableView.getColumns().add(column);
-        }
-        ObservableList<ItemDto> list = FXCollections.observableArrayList(items);
-        //tableView.getItems().clear();
-        tableView.setItems(list);
+        initEvents();
+        initTableColumns(ItemDto.class);
+        connetcToServer();
+        refreshTable();
     }
 
-    private void setEvents() {
-        btnSaveUri.setOnMouseClicked(event -> {
-            // TODO: можно передавать Function onStart, onSucess, onError
-            webClientService.setBaseURI(fieldUri.getText());
-            // проверить соединение
-            // создать колонки в таблице
-            // отобразить в статусе
-        });
-        btnRefreshItems.setOnMouseClicked(event -> {
-            webClientService.getAllItems();
-            // обновить таблице
-        });
+    private void initEvents() {
+        // TODO: можно передавать Function onStart, onSucess, onError
+        btnSaveUri.setOnMouseClicked(event -> connetcToServer());
+
+        btnRefreshItems.setOnMouseClicked(event -> refreshTable());
+
         btnAddItem.setOnMouseClicked(event -> {
             // show second window, block first widnow
             // второе окно с пустыми полями без id
@@ -123,10 +100,36 @@ public class MainController {
         btnDeleteItem.setOnMouseClicked(event -> {
             // взять выбранный обект в таблице и отправить в deleteItem
             //webClientService.deleteItem();
+            ItemDto item = tableView.getSelectionModel().getSelectedItem();
+            webClientService.deleteItem(item);
         });
     }
 
     private void connectFillTable() {
+    }
+
+    private void connetcToServer(){
+        webClientService.setBaseURI(fieldUri.getText());
+        if (webClientService.checkConnection()) {
+            fieldStatus.setText("Сервер не отвечает");
+        } else {
+            fieldStatus.setText("Подключено к серверу");
+        }
+    }
+
+    private <T> void initTableColumns(T type){
+        tableView.getColumns().clear();
+        for (Field field : type.getClass().getDeclaredFields()) {
+            TableColumn column = new TableColumn<>(field.getName());
+            column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
+            tableView.getColumns().add(column);
+        }
+    }
+    private List<ItemDto> refreshTable() {
+        List<ItemDto> items = webClientService.getAllItems();
+        ObservableList<ItemDto> list = FXCollections.observableArrayList(items);
+        tableView.setItems(list);
+        return items;
     }
 
 }

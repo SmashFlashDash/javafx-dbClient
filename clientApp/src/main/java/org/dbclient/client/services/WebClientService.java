@@ -6,8 +6,11 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -20,6 +23,21 @@ public class WebClientService {
 
     public void setBaseURI(String baseURI) {
         this.baseURI = baseURI;
+    }
+
+    public boolean checkConnection() {
+        try {
+            Mono<Object> response = webClient.get().uri(baseURI)
+                    .retrieve()
+                    .onRawStatus(status -> true, respons -> Mono.empty())
+                    .bodyToMono(Object.class);
+            response.block();
+            return true;
+        } catch (WebClientRequestException ex) {
+            return false;
+        }
+
+
     }
 
     public List<ItemDto> getAllItems() {
