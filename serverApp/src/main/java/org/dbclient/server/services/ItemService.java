@@ -24,7 +24,7 @@ public class ItemService {
     }
 
     public Item getById(Long id) {
-        return itemRepository.findById(id).orElseThrow();
+        return itemRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
     }
 
     public List<Item> getAll() {
@@ -38,7 +38,7 @@ public class ItemService {
             item.setPrice(itemDto.getPrice());
             item.setName(itemDto.getName());
             return itemRepository.save(item);
-        }).orElseThrow();
+        }).orElseThrow(() -> new RuntimeException(""));
     }
 
     public void delete(ItemDto itemDto) {

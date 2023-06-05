@@ -1,20 +1,20 @@
 package org.dbclient.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
-import common.data.Item;
+import common.dto.ItemAddDto;
 import common.dto.ItemDto;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
-import org.dbclient.client.ClientApp;
+import org.dbclient.client.config.DtoMapper;
 import org.dbclient.client.services.WebClientService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
@@ -22,10 +22,10 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
@@ -34,12 +34,17 @@ public class PopupController {
     private final MainController mainController;
     private final ApplicationContext context;
     private final Logger log = Logger.getLogger("PopupController");
-    private ItemDto sendedItem = null;
+    private ItemDto editingItem = null;
 
     @FXML
-    private JFXListView<String> leftView;
+    private Label labelStatus;
+
     @FXML
-    private JFXListView<String> rightView;
+    private ListView<String> leftViewType;
+    @FXML
+    private ListView<String> leftViewTitle;
+    @FXML
+    private ListView<String> rightView;
 
     @FXML
     private JFXButton btnAccept;
@@ -48,33 +53,14 @@ public class PopupController {
 
     @FXML
     void initialize() throws IllegalAccessException {
-        // List<String> titles = Arrays.stream(ItemDto.class.getDeclaredFields()).map(Field::getName).collect(Collectors.toList());
-        // leftView.getItems().addAll(titles);
-
-        for (Field field : ItemDto.class.getDeclaredFields()){
-            leftView.getItems().add(field.getName());
-            if (sendedItem != null) {
-                rightView.getItems().add(field.get(sendedItem).toString());
-            }
-        }
-
-        leftView.setMouseTransparent(true);
-        leftView.setFocusTraversable(false);
-//        ObservableList<ItemDto> items = FXCollections.observableArrayList(sendedItem);
-//        sendedItem.g
-//        rightView.setCellFactory(param -> new ListCell<Word>() {
-//            @Override
-//            protected void updateItem(Word item, boolean empty) {
-//                super.updateItem(item, empty);
-//
-//                if (empty || item == null || item.getWord() == null) {
-//                    setText(null);
-//                } else {
-//                    setText(item.getWord());
-//                }
-//            }
-//        });
-
+        listViewsInit();
+        leftViewType.setMouseTransparent(true);
+        leftViewType.setFocusTraversable(false);
+        leftViewTitle.setMouseTransparent(true);
+        leftViewTitle.setFocusTraversable(false);
+        rightView.setOnEditCommit(event -> rightView.getItems().set(event.getIndex(), event.getNewValue()));
+        rightView.setEditable(true);
+        rightView.setCellFactory(TextFieldListCell.forListView());
         btnEventsInit();
     }
 
@@ -83,21 +69,53 @@ public class PopupController {
             Stage stage = (Stage) btnDeny.getScene().getWindow();
             stage.close();
         });
+        // парсинг строковых значений полей в новый itemDto
         btnAccept.setOnMouseClicked(event -> {
-            Stage stage = (Stage) btnDeny.getScene().getWindow();
-            stage.close();
+            //TODO: хорошо сделать через рефлексию чтоббы не зависить от обьекта таблицы
+            // на получилась идуя делать в rightView.setOnEditCommit, но это не то
+            // Field field = fields.get(event.getIndex());
+            // Class<T> c = (Class<T>) Class.forName(field.getName());
+            // field.get(sendedItem);
+            // field.set(sendedItem, event.getNewValue())
+
+            List<String> items = rightView.getItems();
+            try {
+                if (editingItem == null) {
+                    webClientService.addItem(DtoMapper.parseToItemAddDto(items.toArray(new String[items.size()])));
+                } else {
+                    webClientService.editItem(DtoMapper.parseToItemDto(items.toArray(new String[items.size()])));
+                }
+                Stage stage = (Stage) btnDeny.getScene().getWindow();
+                stage.close();
+            } catch (IllegalArgumentException | DateTimeParseException ex) {
+                labelStatus.setText(ex.getMessage());
+            }
         });
+    }
+
+    private void listViewsInit() throws IllegalAccessException {
+        for (Field field : ItemDto.class.getDeclaredFields()) {
+            leftViewType.getItems().add(field.getType().getSimpleName());
+            leftViewTitle.getItems().add(field.getName());
+            if (editingItem != null) {
+                Object value = field.get(editingItem);
+                rightView.getItems().add(value==null? "" : value.toString());
+            } else {
+                rightView.getItems().add("");
+            }
+        }
     }
 
     public void show(Parent parentStage) {
         showFxml(parentStage);
     }
+
     public void show(Parent parentStage, ItemDto sendedItem) {
-        this.sendedItem = sendedItem;
+        this.editingItem = sendedItem;
         showFxml(parentStage);
     }
 
-    private void showFxml(Parent parentStage){
+    private void showFxml(Parent parentStage) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Popup.fxml"));
         fxmlLoader.setControllerFactory(context::getBean);
         try {
@@ -106,7 +124,7 @@ public class PopupController {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(parentStage.getScene().getWindow());
             stage.setOnHidden(event -> {
-                this.sendedItem = null;
+                this.editingItem = null;
             });
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(parent));

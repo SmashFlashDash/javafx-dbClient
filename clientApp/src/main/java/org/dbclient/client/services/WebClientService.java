@@ -1,5 +1,6 @@
 package org.dbclient.client.services;
 
+import common.dto.ItemAddDto;
 import common.dto.ItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -61,7 +62,7 @@ public class WebClientService {
         return response.block();
     }
 
-    public ItemDto addItem(ItemDto itemDto) {
+    public ItemDto addItem(ItemAddDto itemDto) {
         Mono<ItemDto> response = webClient
                 .post().uri("/api/v1/item")
                 .body(Mono.just(itemDto), ItemDto.class)

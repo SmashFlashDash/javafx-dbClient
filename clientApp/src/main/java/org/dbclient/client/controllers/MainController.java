@@ -55,6 +55,9 @@ public class MainController {
     //  ***
     //  можно сделать поиск кнопку и искать локально в таблице а не в sql
 
+    // TODO: чтобы не не блочить поток в webClient, пердавать в методы ламбда функции onSucess OnError
+    //  с блоком других кнопока и остальными действиями, там принимапть функциональный интерфейс
+
     @FXML
     private JFXButton btnSaveUri;
     @FXML
@@ -88,11 +91,6 @@ public class MainController {
         parent = fxmlLoader.load();
         return parent;
     }
-
-    // TODO: чтобы не делать пооток и не блочить webClient
-    //  пердавать в методы ламбдва функции onSucess OnError
-    //  с блоком других кнопока и остальными действиями
-    //  там принимапть функциональный интерфейс
 
     private void initEvents() {
         setBtnDisable(true, new JFXButton[]{btnRefreshItems, btnAddItem, btnEditItem, btnDeleteItem});
