@@ -42,14 +42,6 @@ public class MainController {
     //  стили если будет добавить общих классов на обьекты
     //  и написать общий css
     //  ---
-    //  по кнопке обновить выполняется подключение к сервеу item/all
-    //  если данные получены генерируются колонки по полям в таблице
-    //  и строки заполняются
-    //  ---
-    //  изначалаьно кнопки add edit save заблочены
-    //  add разблокируется после первой загрузки
-    //  edit delte если выбрана строка в таблице
-    //  ---
     //  в таблице должен быть скролл бар
     //  колонки в таблице и поля не редактируемые
     //  ***
@@ -79,57 +71,79 @@ public class MainController {
     void initialize() {
         initEvents();
         initTableColumns(ItemDto.class);
+
         connetcToServer();
-        refreshTable();
     }
 
+    // TODO: чтобы не делать пооток и не блочить webClient
+    //  пердавать в методы ламбдва функции onSucess OnError
+    //  с блоком других кнопока и остальными действиями
+    //  там принимапть функциональный интерфейс
+
     private void initEvents() {
-        // TODO: можно передавать Function onStart, onSucess, onError
+        setBtnDisable(true, new JFXButton[] {btnRefreshItems, btnAddItem, btnEditItem, btnDeleteItem});
         btnSaveUri.setOnMouseClicked(event -> connetcToServer());
-
         btnRefreshItems.setOnMouseClicked(event -> refreshTable());
-
         btnAddItem.setOnMouseClicked(event -> {
             // show second window, block first widnow
-            // второе окно с пустыми полями без id
+            // TODO: второе окно с пустыми полями без id
         });
         btnEditItem.setOnMouseClicked(event -> {
             // show second window, block first widnow
-            // передать во второе окно обьект выбранный в таблице
+            // TODO: передать во второе окно обьект выбранный в таблице
+            ItemDto item = tableView.getSelectionModel().getSelectedItem();
         });
         btnDeleteItem.setOnMouseClicked(event -> {
-            // взять выбранный обект в таблице и отправить в deleteItem
-            //webClientService.deleteItem();
             ItemDto item = tableView.getSelectionModel().getSelectedItem();
-            webClientService.deleteItem(item);
+            if (webClientService.deleteItem(item)){
+                refreshTable();
+            }
+        });
+
+        tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection == null) {
+                btnEditItem.setDisable(true);
+                btnDeleteItem.setDisable(true);
+                return;
+            }
+            btnEditItem.setDisable(false);
+            btnDeleteItem.setDisable(false);
         });
     }
 
-    private void connectFillTable() {
-    }
-
-    private void connetcToServer(){
+    private boolean connetcToServer(){
         webClientService.setBaseURI(fieldUri.getText());
         if (webClientService.checkConnection()) {
-            fieldStatus.setText("Сервер не отвечает");
-        } else {
             fieldStatus.setText("Подключено к серверу");
+            refreshTable();
+            setBtnDisable(false, new JFXButton[] {btnRefreshItems, btnAddItem});
+            return true;
         }
+        fieldStatus.setText("Сервер не отвечает");
+        setBtnDisable(true, new JFXButton[] {btnRefreshItems, btnAddItem, btnEditItem, btnDeleteItem});
+        return false;
     }
 
     private <T> void initTableColumns(T type){
         tableView.getColumns().clear();
-        for (Field field : type.getClass().getDeclaredFields()) {
+        for (Field field : ((Class) type).getDeclaredFields()) {
             TableColumn column = new TableColumn<>(field.getName());
             column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
             tableView.getColumns().add(column);
         }
     }
+
     private List<ItemDto> refreshTable() {
         List<ItemDto> items = webClientService.getAllItems();
         ObservableList<ItemDto> list = FXCollections.observableArrayList(items);
         tableView.setItems(list);
         return items;
+    }
+
+    private void setBtnDisable(boolean bool, JFXButton[] btns) {
+        for (JFXButton btn : btns) {
+            btn.setDisable(bool);
+        }
     }
 
 }

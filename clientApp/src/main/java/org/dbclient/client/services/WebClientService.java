@@ -85,18 +85,20 @@ public class WebClientService {
         return response.block();
     }
 
-    public ItemDto deleteItem(ItemDto itemDto) {
-        // TODO: проверить выполнение
-        // можо поменять на get
-        Mono<ItemDto> response = webClient
-                .method(HttpMethod.DELETE).uri(baseURI + "/api/v1/item")
-                .body(Mono.just(itemDto), ItemDto.class)
-                .retrieve()
-                .bodyToMono(ItemDto.class)
-                //.onErrorMap(e -> new MyException("messahe",e))
-                .doOnSuccess(this::sucess)
-                .doOnError(this::error);
-        return response.block();
+    public boolean deleteItem(ItemDto itemDto) {
+        try {
+            Mono<String> response = webClient
+                    .method(HttpMethod.DELETE).uri(baseURI + "/api/v1/item")
+                    .body(Mono.just(itemDto), ItemDto.class)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .doOnSuccess(this::sucess)
+                    .doOnError(this::error);
+            response.block();
+            return true;
+        } catch (RuntimeException ex) {
+            return false;
+        }
     }
 
     private void onStart() {
@@ -106,6 +108,10 @@ public class WebClientService {
 
     private <T> void sucess(T responseObj) {
         // TODO: разблочить кнопки, и показать стасту успешно
+        if (responseObj == null) {
+            log.info("sucess return null");
+            return;
+        }
         log.info("sucess ".concat(responseObj.toString()));
     }
 
