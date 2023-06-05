@@ -100,22 +100,15 @@ public class WebClientService {
         }
     }
 
-    private void onStart() {
-        // TODO: блочить кнопки и показать статус что выполняется запрос
-        //  блочить можно перед response block
-    }
-
     private <T> void sucess(T responseObj) {
-        // TODO: разблочить кнопки, и показать стасту успешно
         if (responseObj == null) {
             log.info("sucess return null");
-            return;
+        } else {
+            log.info("sucess ".concat(responseObj.toString()));
         }
-        log.info("sucess ".concat(responseObj.toString()));
     }
 
     private void error(Throwable ex) {
-        // TODO: разблочить кнопки, показать в статусе ошибку
         ex.printStackTrace();
         log.info("error ".concat(ex.getMessage()));
     }

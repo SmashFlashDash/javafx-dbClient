@@ -55,13 +55,6 @@ public class PopupController {
         btnEventsInit();
     }
 
-    // TODO: сделать чтобы лист принимал значения при изменении selectedItem
-    //  обновлять таблицу когда разблокируется mainform
-    //  поравить gui второй формы layout можно title добавить
-    //  реформат кода убрать коменты
-    //  проверить jar
-    //  сделать readme
-
     private void btnEventsInit() {
         btnDeny.setOnMouseClicked(event -> {
             Stage stage = (Stage) btnDeny.getScene().getWindow();
@@ -70,13 +63,6 @@ public class PopupController {
 
         // парсинг строковых значений полей в новый itemDto
         btnAccept.setOnMouseClicked(event -> {
-            //TODO: хорошо сделать через рефлексию чтоббы не зависить от обьекта таблицы
-            // на получилась идуя делать в rightView.setOnEditCommit, но это не то
-            // Field field = fields.get(event.getIndex());
-            // Class<T> c = (Class<T>) Class.forName(field.getName());
-            // field.get(sendedItem);
-            // field.set(sendedItem, event.getNewValue())
-
             List<String> items = rightView.getItems();
             try {
                 if (editingItem == null) {
@@ -134,11 +120,9 @@ public class PopupController {
                 mainController.refreshTable();
                 this.editingItem = null;
             });
-            //stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(parent));
             stage.show();
         } catch (IOException e) {
-            //((ClientApp) context.getBean("Main")).stop();
             Platform.exit();
         }
     }

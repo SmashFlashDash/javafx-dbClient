@@ -42,9 +42,4 @@ public class ItemController {
         itemService.delete(itemDto);
         return ResponseEntity.ok("");
     }
-
-    //@GetMapping("/search")
-    //public ResponseEntity<List<TestDto>> find(TestDto test, PageDto page) {
-    //    return ResponseEntity.ok(List.of(new TestDto()));
-    //}
 }

@@ -2,14 +2,6 @@ plugins {
     id 'org.springframework.boot' version "2.7.12" apply false
 }
 
-//
-//bootJar {
-//    enabled = false
-//}
-//jar {
-//    enabled = false
-//}
-
 dependencyManagement {
     imports {
         mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES

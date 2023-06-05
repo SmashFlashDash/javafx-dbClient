@@ -10,13 +10,7 @@ mainClassName = "${mainClass}"
 javafx {
     version = "17"
     modules = ['javafx.controls', 'javafx.fxml']
-    //configuration = "compileOnly"
 }
-
-//bootJar {
-//    enabled = false
-//}
-
 
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
