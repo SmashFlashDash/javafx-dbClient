@@ -14,17 +14,6 @@ public class ClientApp extends Application {
     private ConfigurableApplicationContext context;
     private Parent rootNode;
 
-    // TODO:
-    //  сервисы: setting, getData, editData
-    //      settings - меняет порт webclient
-    //      getData - статсут бар грузится, пока идут данные
-    //      поидее нужно блокировать остальные запросы если последний не выполнен?
-    //  config: webClient с настрйоками
-    //  controllrs:
-    //      основное меню с таблицей,
-    //      второй - всплывающее окно редактировать
-    //      всплывающее окно hbox с полями и кнопками сохранить отменить
-
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -36,7 +25,6 @@ public class ClientApp extends Application {
         fxmlLoader.setControllerFactory(context::getBean);
         rootNode = fxmlLoader.load();
     }
-
 
     @Override
     public void start(Stage stage) {

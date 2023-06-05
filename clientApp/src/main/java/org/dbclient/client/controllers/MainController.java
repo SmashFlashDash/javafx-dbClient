@@ -3,17 +3,30 @@ package org.dbclient.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import org.kordamp.ikonli.javafx.FontIcon;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MainController {
+    // TODO:
+    //  сервисы: data, setting
+    //      settings - меняет порт webclient
+    //      getData - статсут бар грузится, пока идут данные
+    //      поидее нужно блокировать остальные запросы если последний не выполнен?
+    //  config: webClient с настрйоками
+    //  controllrs:
+    //      основное меню с таблицей,
+    //      второй - всплывающее окно редактировать
+    //      всплывающее окно hbox с полями и кнопками сохранить отменить
+
     // TODO: сделать гуи с кнопками и статус баром
     //  ---
     //  вынести endpoint запроса к таблице в application properties
     //  default text вынести в отдельный файл yml
+    //  icon на основное окно и текст database, there
     //  стили если будет добавить общих классов на обьекты
     //  и написать общий css
     //  ---
