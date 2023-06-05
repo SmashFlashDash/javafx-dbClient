@@ -16,16 +16,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ItemDto {
     @NotNull
-    Long id;
+    public Long id;
     @NotBlank
-    String name;
+    public String name;
     @NotNull
-    ItemCategory category;
+    public ItemCategory category;
     @NotNull
-    LocalDateTime dateTimeUPD;
+    public LocalDateTime dateTimeUPD;
     @Min(0)
-    Integer amount;
+    public Integer amount;
     @Min(0)
-    private
-    Float price;
+    public Float price;
 }

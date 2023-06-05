@@ -2,6 +2,7 @@ package org.dbclient.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import common.data.Item;
 import common.dto.ItemDto;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -20,7 +21,11 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
@@ -42,9 +47,34 @@ public class PopupController {
     private JFXButton btnDeny;
 
     @FXML
-    void initialize() {
-        ObservableList<ItemDto> items = FXCollections.observableArrayList(sendedItem);
-        //leftView.set
+    void initialize() throws IllegalAccessException {
+        // List<String> titles = Arrays.stream(ItemDto.class.getDeclaredFields()).map(Field::getName).collect(Collectors.toList());
+        // leftView.getItems().addAll(titles);
+
+        for (Field field : ItemDto.class.getDeclaredFields()){
+            leftView.getItems().add(field.getName());
+            if (sendedItem != null) {
+                rightView.getItems().add(field.get(sendedItem).toString());
+            }
+        }
+
+        leftView.setMouseTransparent(true);
+        leftView.setFocusTraversable(false);
+//        ObservableList<ItemDto> items = FXCollections.observableArrayList(sendedItem);
+//        sendedItem.g
+//        rightView.setCellFactory(param -> new ListCell<Word>() {
+//            @Override
+//            protected void updateItem(Word item, boolean empty) {
+//                super.updateItem(item, empty);
+//
+//                if (empty || item == null || item.getWord() == null) {
+//                    setText(null);
+//                } else {
+//                    setText(item.getWord());
+//                }
+//            }
+//        });
+
         btnEventsInit();
     }
 
@@ -75,7 +105,9 @@ public class PopupController {
             Stage stage = new Stage();
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(parentStage.getScene().getWindow());
-            stage.setOnCloseRequest(event -> this.sendedItem = null);
+            stage.setOnHidden(event -> {
+                this.sendedItem = null;
+            });
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(parent));
             stage.show();
