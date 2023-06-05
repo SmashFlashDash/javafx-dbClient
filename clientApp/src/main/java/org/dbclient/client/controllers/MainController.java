@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import lombok.RequiredArgsConstructor;
 import org.dbclient.client.services.WebClientService;
@@ -80,6 +81,7 @@ public class MainController {
 
     @FXML
     void initialize() {
+        setBtnDisable(true, new JFXButton[]{btnRefreshItems, btnAddItem, btnEditItem, btnDeleteItem});
         initEvents();
         initTableColumns(ItemDto.class);
         connetcToServer();
@@ -93,22 +95,30 @@ public class MainController {
     }
 
     private void initEvents() {
-        setBtnDisable(true, new JFXButton[]{btnRefreshItems, btnAddItem, btnEditItem, btnDeleteItem});
+        fieldUri.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+                connetcToServer();
+            }
+        });
+
+        // клики кнопок
         btnSaveUri.setOnMouseClicked(event -> connetcToServer());
         btnRefreshItems.setOnMouseClicked(event -> refreshTable());
         btnAddItem.setOnMouseClicked(event -> popupController.show(parent));
         btnEditItem.setOnMouseClicked(event -> {
             ItemDto item = tableView.getSelectionModel().getSelectedItem();
             popupController.show(parent, item);
-            System.out.println("showed");
         });
         btnDeleteItem.setOnMouseClicked(event -> {
             ItemDto item = tableView.getSelectionModel().getSelectedItem();
             if (webClientService.deleteItem(item)) {
                 refreshTable();
+            } else {
+                fieldStatus.setText("Запрос не выполнен");
             }
         });
 
+        // блокировка кнопок при выборе строки в таблице
         tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection == null) {
                 btnEditItem.setDisable(true);
@@ -129,10 +139,14 @@ public class MainController {
             return true;
         }
         fieldStatus.setText("Сервер не отвечает");
+        tableView.getItems().clear();
         setBtnDisable(true, new JFXButton[]{btnRefreshItems, btnAddItem, btnEditItem, btnDeleteItem});
         return false;
     }
 
+    /**
+     * Инит полей в таблице по поялм ожидаемого класса
+     */
     private <T> void initTableColumns(T type) {
         tableView.getColumns().clear();
         for (Field field : ((Class) type).getDeclaredFields()) {
@@ -142,7 +156,7 @@ public class MainController {
         }
     }
 
-    private List<ItemDto> refreshTable() {
+    public List<ItemDto> refreshTable() {
         List<ItemDto> items = webClientService.getAllItems();
         ObservableList<ItemDto> list = FXCollections.observableArrayList(items);
         tableView.setItems(list);

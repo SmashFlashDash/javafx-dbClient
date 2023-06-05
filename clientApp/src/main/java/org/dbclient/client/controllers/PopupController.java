@@ -6,6 +6,7 @@ import common.dto.ItemDto;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -63,6 +64,13 @@ public class PopupController {
         rightView.setCellFactory(TextFieldListCell.forListView());
         btnEventsInit();
     }
+
+    // TODO: сделать чтобы лист принимал значения при изменении selectedItem
+    //  обновлять таблицу когда разблокируется mainform
+    //  поравить gui второй формы layout можно title добавить
+    //  реформат кода убрать коменты
+    //  проверить jar
+    //  сделать readme
 
     private void btnEventsInit() {
         btnDeny.setOnMouseClicked(event -> {
@@ -124,6 +132,7 @@ public class PopupController {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(parentStage.getScene().getWindow());
             stage.setOnHidden(event -> {
+                mainController.refreshTable();
                 this.editingItem = null;
             });
             //stage.initStyle(StageStyle.UNDECORATED);
