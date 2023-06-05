@@ -1,11 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dbclient.client.controllers.PopupController">
+<AnchorPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dbclient.client.controllers.PopupController">
    <children>
-      <JFXListView prefHeight="400.0" prefWidth="225.0" style="-fx-background-color: #a2a2a2;" />
+      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox>
+               <children>
+                  <JFXListView fx:id="leftView" style="-fx-background-color: #a2a2a2;" />
+                  <JFXButton fx:id="btnDeny" maxWidth="1.7976931348623157E308" minHeight="50.0" style="-fx-border-color: #e33437; -fx-border-width: 5; -fx-border-radius: 0; -fx-background-color: #ffffff;" text="ОТМЕНА" textFill="#000000b2">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/deny.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <JFXListView fx:id="rightView" style="-fx-background-color: #ffffff;" />
+                  <JFXButton fx:id="btnAccept" maxWidth="1.7976931348623157E308" minHeight="50.0" style="-fx-border-color: #5Ba4fc; -fx-border-width: 5; -fx-border-radius: 0; -fx-background-color: #ffffff;" text="ПРИМЕНИТЬ" textFill="#000000aa">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/accept.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

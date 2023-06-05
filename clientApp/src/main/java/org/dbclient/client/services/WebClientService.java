@@ -7,10 +7,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,7 +16,7 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class WebClientService {
     private final WebClient webClient;
-    private final Logger log = Logger.getLogger(this.getClass().getName());
+    private final Logger log = Logger.getLogger("WebClientService");
     private String baseURI = "http://localhost:8080";
 
     public void setBaseURI(String baseURI) {
