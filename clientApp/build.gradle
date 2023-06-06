@@ -8,7 +8,7 @@ def mainClass = 'org.dbclient.client.ClientApp'
 
 mainClassName = "${mainClass}"
 javafx {
-    version = "17"
+    version = "11"
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
@@ -26,6 +26,15 @@ dependencies {
     implementation project(':common')
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.jfoenix:jfoenix:9.0.10'
+    implementation "org.openjfx:javafx-base:${javafx.version}:win"
+    implementation "org.openjfx:javafx-graphics:${javafx.version}:win"
+    implementation "org.openjfx:javafx-controls:${javafx.version}:win"
+    implementation "org.openjfx:javafx-base:${javafx.version}:linux"
+    implementation "org.openjfx:javafx-graphics:${javafx.version}:linux"
+    implementation "org.openjfx:javafx-controls:${javafx.version}:linux"
+    implementation "org.openjfx:javafx-base:${javafx.version}:mac"
+    implementation "org.openjfx:javafx-graphics:${javafx.version}:mac"
+    implementation "org.openjfx:javafx-controls:${javafx.version}:mac"
 }
 
 
