@@ -117,7 +117,7 @@ public class PopupController {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(parentStage.getScene().getWindow());
             stage.setOnHidden(event -> {
-                mainController.refreshTable();
+                mainController.btnRefreshTable();
                 this.editingItem = null;
             });
             stage.setScene(new Scene(parent));
